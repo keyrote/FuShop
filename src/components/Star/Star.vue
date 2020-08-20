@@ -1,10 +1,6 @@
 <template>
-  <div class="star star-24">
-    <span class="star-item on"></span>
-    <span class="star-item on"></span>
-    <span class="star-item on"></span>
-    <span class="star-item half"></span>
-    <span class="star-item off"></span>
+  <div class="star" :class="'star-'+size">
+    <span class="star-item" v-for="(sc, index) in starClasses" :class="sc" :key="index"></span>
   </div>
 </template>
 
@@ -13,6 +9,20 @@ export default {
   props: {
     score: Number,
     size: Number
+  },
+  computed: {
+    starClasses () {
+      const {score} = this
+      const scs = []
+      const scoreInteger = Math.floor(score)
+      for(let i = 0;i< scoreInteger;i++)
+      scs.push('on')
+      if(score*10-scoreInteger*10>=5)
+      scs.push('half')
+      while(scs.length<5)
+      scs.push('off')
+      return scs
+    }
   }
 }
 </script>
