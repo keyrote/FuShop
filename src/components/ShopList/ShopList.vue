@@ -51,7 +51,8 @@
       </li>
     </ul>
     <ul v-else>
-      <li v-for="shop in 6">
+      <li v-for="index in 6"
+          :key="index">
         <img src="./images/shop_back.svg"
              alt="加载中">
       </li>

@@ -1,6 +1,10 @@
 <template>
-  <div class="star" :class="'star-'+size">
-    <span class="star-item" v-for="(sc, index) in starClasses" :class="sc" :key="index"></span>
+  <div class="star"
+       :class="'star-'+size">
+    <span class="star-item"
+          v-for="(sc, index) in starClasses"
+          :class="sc"
+          :key="index"></span>
   </div>
 </template>
 
@@ -12,15 +16,12 @@ export default {
   },
   computed: {
     starClasses () {
-      const {score} = this
+      const { score } = this
       const scs = []
       const scoreInteger = Math.floor(score)
-      for(let i = 0;i< scoreInteger;i++)
-      scs.push('on')
-      if(score*10-scoreInteger*10>=5)
-      scs.push('half')
-      while(scs.length<5)
-      scs.push('off')
+      for (let i = 0; i < scoreInteger; i++) { scs.push('on') }
+      if (score * 10 - scoreInteger * 10 >= 5) { scs.push('half') }
+      while (scs.length < 5) { scs.push('off') }
       return scs
     }
   }
@@ -28,7 +29,7 @@ export default {
 </script>
 
 <style  lang="stylus" rel="stylesheet/stylus">
-@import "../../common/stylus/mixins.styl"
+@import '../../common/stylus/mixins.styl'
 .star // 2x图 3x图
   float left
   font-size 0

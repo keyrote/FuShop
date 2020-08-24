@@ -44,5 +44,4 @@ export default {
       outline none
       border-radius 5px
       padding 10px 20px
-
 </style>

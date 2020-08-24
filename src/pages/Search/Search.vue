@@ -1,10 +1,16 @@
 <template>
   <!--搜索-->
   <div class="search">
-    <HeaderTop title="搜索"/>
-    <form class="search_form" action="#">
-      <input type="search" name="search" placeholder="请输入商家或美食名称" class="search_input">
-      <input type="submit" name="submit" class="search_submit">
+    <HeaderTop title="搜索" />
+    <form class="search_form"
+          action="#">
+      <input type="search"
+             name="search"
+             placeholder="请输入商家或美食名称"
+             class="search_input">
+      <input type="submit"
+             name="submit"
+             class="search_submit">
     </form>
   </div>
 </template>
@@ -19,7 +25,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
- &.search // 搜索
+&.search // 搜索
   width 100%
   .header
     background-color #1a0424
@@ -59,7 +65,7 @@ export default {
       top 50%
       transform translateY(-50%)
       .header_login_text
-        color #fff    
+        color #fff
   .search_form
     clearFix()
     margin-top 45px
@@ -84,5 +90,5 @@ export default {
         border 4px solid #1a0424
         font-size 16px
         color #fff
-        background-color #1a0424 
+        background-color #1a0424
 </style>
