@@ -1,23 +1,33 @@
+/* eslint-disable vue/require-v-for-key */
+/* eslint-disable vue/require-v-for-key */
 <template>
   <div class="shop_container">
-    <ul class="shop_list" v-if="shops.length">
-      <li class="shop_li border-1px" v-for="(shop, index) in shops" :key="index">
+    <ul class="shop_list"
+        v-if="shops.length">
+      <li class="shop_li border-1px"
+          v-for="(shop, index) in shops"
+          :key="index"
+          @click="$router.push('/shop')">
         <a>
           <div class="shop_left">
-            <img class="shop_img" src="http://cube.elemecdn.com/9/f6/dca6ae0d2c743a68e66ba0dca5f01JPEG.JPEG">
+            <img class="shop_img"
+                 src="http://cube.elemecdn.com/9/f6/dca6ae0d2c743a68e66ba0dca5f01JPEG.JPEG">
           </div>
           <div class="shop_right">
             <section class="shop_detail_header">
               <h4 class="shop_title ellipsis">{{shop.name}}</h4>
               <ul class="shop_detail_ul">
-                <li class="supports" v-for="(support,index) in shop.supports" :key="index">
+                <li class="supports"
+                    v-for="(support,index) in shop.supports"
+                    :key="index">
                   {{support.icon_name}}
                 </li>
               </ul>
             </section>
             <section class="shop_rating_order">
               <section class="shop_rating_order_left">
-                <Star :score="shop.rating" :size="24"/>
+                <Star :score="shop.rating"
+                      :size="24" />
                 <div class="rating_section">
                   {{shop.rating}}
                 </div>
@@ -42,23 +52,17 @@
     </ul>
     <ul v-else>
       <li v-for="shop in 6">
-        <img src="./images/shop_back.svg" alt="加载中">
+        <img src="./images/shop_back.svg"
+             alt="加载中">
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 import Star from '../Star/Star'
 export default {
-  data () {
-    return {
-      //imgBaseUrl: 'http://cangdu.org:8001/img/'
-      //https://cube.elemecdn.com/9/f6/dca6ae0d2c743a68e66ba0dca5f01JPEG.JPEG
-      //imgBaseUrl: 'https://cube.elemecdn.com/img/'
-    }
-  },
   computed: {
     ...mapState(['shops'])
   },
@@ -69,7 +73,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-@import "../../common/stylus/mixins.styl"
+@import '../../common/stylus/mixins.styl'
 .shop_container
   margin-bottom 50px
   .shop_list

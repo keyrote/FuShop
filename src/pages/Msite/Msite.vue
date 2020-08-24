@@ -1,12 +1,13 @@
 <template>
 <div class="msite">
   <HeaderTop :title="address.name">
-    <span class="header_search" slot="left">
+    <router-link class="header_search" slot="left" to="/search">
       <i class="iconfont icon-sousuo"></i>
-    </span>
-    <span class="header_login" slot="right">
-      <span class="header_login_text">登录|注册</span>
-    </span>
+    </router-link>
+    <router-link class="header_login" slot="right" :to="userInfo._id? '/userinfo' : '/login'">
+      <span class="header_login_text" v-if="!userInfo._id">登录|注册</span>
+      <span class="header_login_text" v-else><i class="iconfont icon-geren" ></i></span>
+    </router-link>
   </HeaderTop>
   <!--首页导航-->
   <nav class="msite_nav">
@@ -56,14 +57,15 @@ export default {
   watch: {
     categorys (value) {
       this.$nextTick(() => {
-         //swiper实现轮播
-        new Swiper ('.swiper-container', {
-        loop: true, // 循环模式选项
-        // 如果需要分页器
-        pagination: {
-         el: '.swiper-pagination',
-        }
-      })  
+        // swiper实现轮播
+        // eslint-disable-next-line no-new
+        new Swiper('.swiper-container', {
+          loop: true, // 循环模式选项
+          // 如果需要分页器
+          pagination: {
+            el: '.swiper-pagination'
+          }
+        })
       })
     }
   },
@@ -72,18 +74,17 @@ export default {
     ShopList
   },
   computed: {
-    ...mapState(['address','categorys']),
+    ...mapState(['address', 'categorys', 'userInfo']),
     categorysArr () {
       const {categorys} = this
       const arr = []
-      let minArr =[]
+      let minArr = []
       categorys.forEach(c => {
-        if(minArr.length === 0)
-        {
+        if (minArr.length === 0) {
           arr.push(minArr)
         }
         minArr.push(c)
-        if(minArr.length === 8) {
+        if (minArr.length === 8) {
           minArr = []
         }
       })
