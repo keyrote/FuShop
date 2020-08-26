@@ -1,5 +1,4 @@
 /* eslint-disable vue/require-v-for-key */
-/* eslint-disable vue/require-v-for-key */
 <template>
   <div class="shop_container">
     <ul class="shop_list"

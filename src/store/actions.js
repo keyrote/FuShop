@@ -6,7 +6,9 @@ import {
   RESET_USER_INFO,
   RECEIVE_GOODS,
   RECEIVE_INFO,
-  RECEIVE_RATINGS
+  RECEIVE_RATINGS,
+  INCREMENT_FOOD_COUNT,
+  DECREMENT_FOOD_COUNT
 } from './mutation-types'
 import {
   reqAddress,
@@ -74,11 +76,20 @@ export default {
       commit(RECEIVE_RATINGS, { ratings })
     }
   },
-  async getShopGoods ({ commit }) {
+  async getShopGoods ({ commit }, callback) {
     const result = await reqShopGoods()
     if (result.code === 0) {
       const goods = result.data
-      commit(RECEIVE_GOODS, { goods }) // 如果组件中传递了接收消息的回调函数, 数据更新后, 调用回调通知调用的组件
+      commit(RECEIVE_GOODS, { goods })
+      // 如果组件中传递了接收消息的回调函数, 数据更新后, 调用回调通知调用的组件
+      callback && callback()
+    }
+  },
+  updateFoodCount ({ commit }, { isAdd, food }) {
+    if (isAdd) {
+      commit(INCREMENT_FOOD_COUNT, { food })
+    } else {
+      commit(DECREMENT_FOOD_COUNT, { food })
     }
   }
 }
