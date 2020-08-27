@@ -23,34 +23,39 @@
           </div>
         </div>
       </div>
-      <div class="shopcart-list"
-           v-show="listShow">
-        <div class="list-header">
-          <h1 class="title">购物车</h1> <span class="empty">清空</span>
+      <transition name="move">
+        <div class="shopcart-list"
+             v-show="listShow">
+          <div class="list-header">
+            <h1 class="title">购物车</h1> <span class="empty">清空</span>
+          </div>
+          <div class="list-content">
+            <ul>
+              <li class="food"
+                  v-for="(food, index) in cartFoods"
+                  :key="index"> <span class="name">{{food.name}}</span>
+                <div class="price"><span>￥{{food.price}}</span></div>
+                <div class="cartcontrol-wrapper">
+                  <CartControl :food="food" />
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="list-content">
-          <ul>
-            <li class="food"
-                v-for="(food, index) in cartFoods"
-                :key="index"> <span class="name">{{food.name}}</span>
-              <div class="price"><span>￥{{food.price}}</span></div>
-              <div class="cartcontrol-wrapper">
-                <CartControl :food="food" />
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+      </transition>
     </div>
-    <div class="list-mask"
-         v-show="listShow"
-         @click="toggleShow"></div>
+    <transition name="fade">
+      <div class="list-mask"
+           v-show="listShow"
+           @click="toggleShow"></div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
 import CartControl from '../../components/CartControl/CartControl'
+import BScroll from 'better-scroll'
 export default {
   data () {
     return {
@@ -81,6 +86,14 @@ export default {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.isShow = false
         return false
+      }
+      if (this.isShow) {
+        this.$nextTick(() => {
+          // eslint-disable-next-line no-new
+          new BScroll('.list-content', {
+            click: true
+          })
+        })
       }
       return this.isShow
     }
@@ -259,7 +272,7 @@ export default {
   height 100%
   z-index 40
   backdrop-filter blur(10px)
-  opacity 0.8
+  opacity 0.6
   background rgba(86, 70, 122, 0.5)
   &.fade-enter-active, &.fade-leave-active
     transition all 0.5s
