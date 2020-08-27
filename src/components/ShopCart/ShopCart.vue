@@ -27,7 +27,8 @@
         <div class="shopcart-list"
              v-show="listShow">
           <div class="list-header">
-            <h1 class="title">购物车</h1> <span class="empty">清空</span>
+            <h1 class="title">购物车</h1> <span class="empty"
+                  @click="clearCart">清空</span>
           </div>
           <div class="list-content">
             <ul>
@@ -54,6 +55,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import { MessageBox } from 'mint-ui'
 import CartControl from '../../components/CartControl/CartControl'
 import BScroll from 'better-scroll'
 export default {
@@ -89,10 +91,14 @@ export default {
       }
       if (this.isShow) {
         this.$nextTick(() => {
-          // eslint-disable-next-line no-new
-          new BScroll('.list-content', {
-            click: true
-          })
+          if (!this.scroll) {
+            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+            this.scroll = new BScroll('.list-content', {
+              click: true
+            })
+          } else {
+            this.scroll.refresh()
+          }
         })
       }
       return this.isShow
@@ -103,6 +109,11 @@ export default {
       if (this.totalCount) {
         this.isShow = !this.isShow
       }
+    },
+    clearCart () {
+      MessageBox.confirm('确定清空吗?').then(action => {
+        this.$store.dispatch('clearCart')
+      }, () => { })
     }
   },
   components: {

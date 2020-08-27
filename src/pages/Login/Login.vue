@@ -4,21 +4,34 @@
       <div class="login_header">
         <h2 class="login_logo">甫得留游</h2>
         <div class="login_header_title">
-          <a href="javascript:;" :class="{on: loginWay}" @click="loginWay=true">短信登录</a>
-          <a href="javascript:;" :class="{on: !loginWay}" @click="loginWay=false">密码登录</a>
+          <a href="javascript:;"
+             :class="{on: loginWay}"
+             @click="loginWay=true">短信登录</a>
+          <a href="javascript:;"
+             :class="{on: !loginWay}"
+             @click="loginWay=false">密码登录</a>
         </div>
       </div>
       <div class="login_content">
         <form @submit.prevent="login">
           <div :class="{on: loginWay}">
             <section class="login_message">
-              <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
-              <button :disabled="!rightPhone" class="get_verification" :class="{right_phone: rightPhone}" @click.prevent="getCode">
+              <input type="tel"
+                     maxlength="11"
+                     placeholder="手机号"
+                     v-model="phone">
+              <button :disabled="!rightPhone"
+                      class="get_verification"
+                      :class="{right_phone: rightPhone}"
+                      @click.prevent="getCode">
                 {{computeTime? `已发送(${computeTime}s)`: '获取验证码'}}
               </button>
             </section>
             <section class="login_verification">
-              <input type="tel" maxlength="8" placeholder="验证码" v-model="code">
+              <input type="tel"
+                     maxlength="8"
+                     placeholder="验证码"
+                     v-model="code">
             </section>
             <section class="login_hint">
               温馨提示：未注册甫得留游帐号的手机号，登录时将自动注册，且代表已同意
@@ -28,37 +41,63 @@
           <div :class="{on: !loginWay}">
             <section>
               <section class="login_message">
-                <input type="text" maxlength="11" placeholder="手机/邮箱/用户名" v-model="name">
+                <input type="text"
+                       maxlength="15"
+                       placeholder="手机/邮箱/用户名"
+                       v-model="name">
               </section>
               <section class="login_verification">
-                <input type="text" maxlength="8" placeholder="密码" v-if="showPwd" v-model="pwd">
-                <input type="password" maxlength="8" placeholder="密码" v-else v-model="pwd">
-                <div class="switch_button" :class="showPwd? 'on':'off'" @click="showPwd=!showPwd">
-                  <div class="switch_circle" :class="{right: showPwd}"></div>
+                <input type="text"
+                       maxlength="8"
+                       placeholder="密码"
+                       v-if="showPwd"
+                       v-model="pwd">
+                <input type="password"
+                       maxlength="8"
+                       placeholder="密码"
+                       v-else
+                       v-model="pwd">
+                <div class="switch_button"
+                     :class="showPwd? 'on':'off'"
+                     @click="showPwd=!showPwd">
+                  <div class="switch_circle"
+                       :class="{right: showPwd}"></div>
                   <span class="switch_text">{{showPwd? 'show':'...'}}</span>
                 </div>
               </section>
               <section class="login_message">
-                <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
-                <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha" @click="getCaptcha" ref="captcha">
+                <input type="text"
+                       maxlength="11"
+                       placeholder="验证码"
+                       v-model="captcha">
+                <img class="get_verification"
+                     src="http://localhost:4000/captcha"
+                     alt="captcha"
+                     @click="getCaptcha"
+                     ref="captcha">
               </section>
             </section>
           </div>
           <button class="login_submit">登录</button>
         </form>
-        <a href="javascript:;" class="about_us">关于我们</a>
+        <a href="javascript:;"
+           class="about_us">关于我们</a>
       </div>
-      <a href="javascript:" class="go_back" @click="$router.back()">
+      <a href="javascript:"
+         class="go_back"
+         @click="$router.back()">
         <i class="iconfont icon-arrow-left-bold"></i>
       </a>
     </div>
-    <AlertTip :alertText="alertText" v-show="showAlert" @closeTip="closeTip"></AlertTip>
+    <AlertTip :alertText="alertText"
+              v-show="showAlert"
+              @closeTip="closeTip"></AlertTip>
   </div>
 </template>
 
 <script>
 import AlertTip from '../../components/AlertTip/AlertTip'
-import {reqSendCode, reqSmsLogin, reqPwdLogin} from '../../api'
+import { reqSendCode, reqSmsLogin, reqPwdLogin } from '../../api'
 export default {
   data () {
     return {
@@ -106,7 +145,7 @@ export default {
       let result
       // 表单验证
       if (this.loginWay) { // 短信登陆
-        const {rightPhone, phone, code} = this
+        const { rightPhone, phone, code } = this
         if (!rightPhone) {
           this.showText('请输入正确手机号')
         } else if (!(/^\d{6}$/.test(code))) {
@@ -115,7 +154,7 @@ export default {
         }
         result = await reqSmsLogin(phone, code)
       } else { // 密码登录
-        const {name, pwd, captcha} = this
+        const { name, pwd, captcha } = this
         if (!name) {
           this.showText('用户名不能为空')
         } else if (!pwd) {
@@ -124,7 +163,7 @@ export default {
           this.showText('请输入图片验证码')
         }
         // console.log(name, pwd, captcha)
-        result = await reqPwdLogin({name, pwd, captcha})
+        result = await reqPwdLogin({ name, pwd, captcha })
         console.log(result)
       }
       if (this.computeTime) {
