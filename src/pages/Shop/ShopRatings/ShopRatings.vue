@@ -68,7 +68,7 @@
                       v-for="(item, index) in rating.recommend"
                       :key="index">{{item}}</span>
               </div>
-              <div class="time">{{rating.rateTime | formatDate}}</div>
+              <div class="time">{{rating.rateTime | date-format}}</div>
             </div>
           </li>
         </ul>
@@ -78,7 +78,6 @@
 </template>
 <script>
 import BScroll from 'better-scroll'
-import moment from 'moment'
 import { mapState, mapGetters } from 'vuex'
 import Star from '../../../components/Star/Star'
 export default {
@@ -118,11 +117,6 @@ export default {
     },
     toggleOnlyShowText () {
       this.onlyShowText = !this.onlyShowText
-    }
-  },
-  filters: {
-    formatDate: function (value) {
-      return moment(value).format('YYYY-MM-DD HH:mm')
     }
   }
 }
